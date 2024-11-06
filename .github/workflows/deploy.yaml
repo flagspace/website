@@ -39,7 +39,7 @@ jobs:
           sudo apt-get update && sudo apt-get install -y sshpass
 
           # Clear out old files on the server
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no a1679014@access-5016605339.webspace-host.com "rm -rf /website/*"
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no a1679014@access-5016605339.webspace-host.com "rm -rf ~/website/*"
 
           # Transfer new build files from the dist folder to the /website directory on the server
-          sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r dist/* a1679014@access-5016605339.webspace-host.com:/website/
+          sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r dist/* a1679014@access-5016605339.webspace-host.com:~/website/
