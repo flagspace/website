@@ -68,7 +68,7 @@ function App() {
               Coming Soon
             </span>
             <h1 className="text-5xl font-bold mb-6 text-blue-600">
-              Feature Management for the Edge Era
+              Feature Management for the Edge
             </h1>
             <p className="text-xl text-gray-600 mb-8">
               Lightning-fast feature flags and experimentation platform built

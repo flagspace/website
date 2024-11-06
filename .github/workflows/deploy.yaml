@@ -1,0 +1,45 @@
+name: Deploy Vite Project
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4  # Latest version as of October 2024
+
+      # Step 2: Set up Node.js environment and install dependencies
+      - name: Set up Node.js
+        uses: actions/setup-node@v4  # Latest version as of October 2024
+        with:
+          node-version: '20'  # Latest LTS version as of October 2024
+
+      - name: Install dependencies
+        run: npm install
+
+      # Step 3: Build the project using Vite
+      - name: Build project
+        run: npm run build
+
+      # Step 4: Deploy to Server
+      - name: Deploy to Server
+        env:
+          SSH_PASSWORD: ${{ secrets.IONOS_SSH_PASSWORD }}
+        run: |
+          # Install sshpass for password-based SSH authentication
+          sudo apt-get update && sudo apt-get install -y sshpass
+
+          # Clear out old files on the server
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no a1679014@access-5016605339.webspace-host.com "rm -rf /website/*"
+
+          # Transfer new build files from the dist folder to the /website directory on the server
+          sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r dist/* a1679014@access-5016605339.webspace-host.com:/website/
