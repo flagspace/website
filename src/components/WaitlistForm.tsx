@@ -22,6 +22,20 @@ export default function WaitlistForm({ isOpen, onClose }: WaitlistFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
+    fetch('https://website-backend-164736659197.us-central1.run.app/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     onClose();
   };
 
